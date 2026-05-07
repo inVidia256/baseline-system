@@ -1,0 +1,81 @@
+# 模型配置
+model:
+  name: "/workspace/work/models/Qwen3-VL-8B-Instruct"
+  output_dir: "./finetuned_qwen_lora"
+  load_in_8bit: true
+  load_in_4bit: false
+
+# LoRA 配置
+lora:
+  r: 16                    # LoRA 秩
+  alpha: 32                # LoRA 缩放因子
+  dropout: 0.05           # Dropout 率
+  target_modules:           # 目标模块
+    - "q_proj"
+    - "k_proj"
+    - "v_proj"
+    - "o_proj"
+
+# 训练配置
+training:
+  num_train_epochs: 3
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: 1.0e-4
+  warmup_steps: 50
+  weight_decay: 0.01
+  max_seq_length: 1024
+  
+  # 保存策略
+  save_strategy: "epoch"
+  save_total_limit: 1
+  logging_steps: 10
+  
+  # 优化器
+  optim: "adamw_torch"
+  fp16: true
+  dataloader_pin_memory: false
+
+# 数据集配置
+dataset:
+  papers_dir: "papers"
+  max_samples: 20          # 最大样本数，防止显存溢出
+  validation_split: 0.1     # 验证集比例
+
+# 结构化摘要模板配置
+prompt_template:
+  system_message: "你是一个专业的学术编辑，擅长撰写结构化摘要。"
+  
+  structure:
+    background: "描述研究问题、研究空白或现有方法的局限性"
+    method: "详细说明提出的框架、算法或实验设计"
+    experiments: "报告关键实验结果、数据集、评估指标"
+    conclusion: "总结主要发现和意义"
+  
+  format: |
+    【背景】
+    {background}
+    
+    【方法】
+    {method}
+    
+    【实验】
+    {experiments}
+    
+    【结论】
+    {conclusion}
+
+# 实验跟踪配置
+logging:
+  log_level: "INFO"
+  log_file: "finetune_{timestamp}.log"
+  tensorboard_dir: "./tensorboard_logs"
+  report_to: "none"  # 可选: "tensorboard", "wandb", "none"
+
+# 测试配置
+testing:
+  test_after_training: true
+  test_paper_dir: "papers/sample"
+  max_test_length: 4000
+  save_test_result: true
+  test_output_file: "test_result.txt"

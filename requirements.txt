@@ -1,0 +1,37 @@
+# ===== 核心深度学习框架 =====
+torch>=2.0.0
+torchvision>=0.15.0
+accelerate>=0.20.0
+bitsandbytes>=0.41.0
+
+# ===== HuggingFace 生态 =====
+# 使用支持 Qwen3-VL 的 transformers 版本
+git+https://github.com/huggingface/transformers@main
+huggingface-hub>=1.5.0,<2.0.0
+tokenizers>=0.22.0,<=0.23.0
+sentence-transformers>=2.2.2
+
+# ===== 多模态处理 =====
+Pillow>=9.0.0
+pytesseract>=0.3.10
+opencv-python>=4.8.0
+# pix2tex>=0.1.0
+camelot-py>=0.11.0
+timm>=0.9.0,<1.0.0
+
+# ===== RAG 系统 =====
+chromadb>=0.4.0
+rank-bm25>=0.2.2
+
+# ===== 评估指标 =====
+rouge>=1.0.1
+nltk>=3.8.0
+
+# ===== 其他工具 =====
+numpy>=1.24.0,<2.0.0
+regex>=2023.10.0
+pyyaml>=6.0.0
+tqdm>=4.65.0
+requests>=2.31.0
+packaging>=23.0
+typing-extensions>=4.5.0
